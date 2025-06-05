@@ -1,0 +1,39 @@
+
+
+<!-- Image Preview Script -->
+<script>
+function previewImage(input, previewContainerId, isMultiple) {
+    const previewContainer = document.getElementById(previewContainerId);
+    previewContainer.innerHTML = ""; // Clear previous previews
+
+    if (input.files && input.files.length > 0) {
+        Array.from(input.files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const pictureBox = document.createElement("div");
+                pictureBox.className = "picture-box";
+                const img = document.createElement("img");
+                img.src = e.target.result;
+                pictureBox.appendChild(img);
+                previewContainer.appendChild(pictureBox);
+                
+                // Remove placeholder class for single image preview
+                if (!isMultiple) {
+                    previewContainer.classList.remove("picture-box-placeholder");
+                }
+            };
+            reader.readAsDataURL(file);
+            
+            // For single image inputs, only process the first file
+            if (!isMultiple) {
+                return;
+            }
+        });
+    } else {
+        // Add placeholder class for single image preview if no files
+        if (!isMultiple) {
+            previewContainer.classList.add("picture-box-placeholder");
+        }
+    }
+}
+</script>

@@ -1,0 +1,158 @@
+body {
+    background-color: #f5f6fa;
+}
+
+.sidebar {
+    background-color: #003f5c;
+    color: white;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 1rem;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background-color: #002c40;
+}
+
+.content {
+    padding: 2rem;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.form-section {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.form-section h4 {
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .sidebar {
+        height: 100vh;
+        position: fixed;
+        width: 250px;
+    }
+
+    .content {
+        margin-left: 250px;
+    }
+}
+
+/* Hide all sections by default */
+#main-content>div {
+    display: none;
+}
+
+/* Show only the dashboard by default */
+#main-content .dashboard-section {
+    display: block;
+}
+
+.photos-section {
+    padding: 20px;
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.photo-upload-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.form-label {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.picture-box,
+.multi-picture-box-container {
+    width: 100%;
+    height: 150px;
+    border: 2px dashed #ccc;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.picture-box-placeholder {
+    background-color: #e0e0e0;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Navigation container */
+.navigation-container {
+    margin-top: 20px;
+    margin-bottom: 2rem;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigation buttons */
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-buttons .btn {
+    min-width: 120px;
+}
+
+/* Action buttons */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    /* Added vertical space */
+}
+
+.action-buttons .btn {
+    min-width: 120px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .photo-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-buttons,
+    .action-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .nav-buttons .btn,
+    .action-buttons .btn {
+        width: 100%;
+    }
+}

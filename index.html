@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hostel Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Save Confirmation Modal -->
+    <div class="modal fade" id="saveConfirmationModal" tabindex="-1" aria-labelledby="saveConfirmationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="saveConfirmationModalLabel">Save Changes?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    You have unsaved changes. Would you like to save them before proceeding?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        onclick="proceedWithoutSaving()">Don't Save</button>
+                    <button type="button" class="btn btn-primary" onclick="saveAndProceed()">Save & Proceed</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Navbar -->
+    <nav class="navbar navbar-dark bg-dark d-md-none">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">🏨 Hostel Admin</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Offcanvas Sidebar for Mobile -->
+    <div class="offcanvas offcanvas-start sidebar d-md-none" tabindex="-1" id="offcanvasSidebar">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title text-white">🏨 Hostel Admin</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+            <a href="#" data-section="dashboard-section"><i class="bi bi-house-door-fill me-2"></i>Dashboard</a>
+            <a href="#" data-section="basic-info-section"><i class="bi bi-person-lines-fill me-2"></i>Basic Info</a>
+            <a href="#" data-section="location-section"><i class="bi bi-geo-alt-fill me-2"></i>Location</a>
+            <a href="#" data-section="description-section"><i class="bi bi-card-text me-2"></i>Description</a>
+            <a href="#" data-section="rooms-section"><i class="bi bi-door-open-fill me-2"></i>Rooms</a>
+            <a href="#" data-section="facilities-section"><i class="bi bi-check2-square me-2"></i>Facilities</a>
+            <a href="#" data-section="photos-section"><i class="bi bi-images me-2"></i>Photos</a>
+            <a href="#" data-section="booking-info-section"><i class="bi bi-credit-card-2-back-fill me-2"></i>Booking
+                Info</a>
+            <a href="#" data-section="availability-section"><i
+                    class="bi bi-calendar-check-fill me-2"></i>Availability</a>
+        </div>
+    </div>
+
+    <!-- Sidebar for Desktop -->
+    <div class="sidebar d-none d-md-block">
+        <h3 class="text-white px-3 pt-3">🏨 Hostel Admin</h3>
+        <hr class="text-white" />
+        <a href="#" data-section="dashboard-section"><i class="bi bi-house-door-fill me-2"></i>Dashboard</a>
+        <a href="#" data-section="basic-info-section"><i class="bi bi-person-lines-fill me-2"></i>Basic Info</a>
+        <a href="#" data-section="location-section"><i class="bi bi-geo-alt-fill me-2"></i>Location</a>
+        <a href="#" data-section="description-section"><i class="bi bi-card-text me-2"></i>Description</a>
+        <a href="#" data-section="rooms-section"><i class="bi bi-door-open-fill me-2"></i>Rooms</a>
+        <a href="#" data-section="facilities-section"><i class="bi bi-check2-square me-2"></i>Facilities</a>
+        <a href="#" data-section="photos-section"><i class="bi bi-images me-2"></i>Photos</a>
+        <a href="#" data-section="booking-info-section"><i class="bi bi-credit-card-2-back-fill me-2"></i>Booking
+            Info</a>
+        <a href="#" data-section="availability-section"><i class="bi bi-calendar-check-fill me-2"></i>Availability</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <nav class="navbar navbar-light bg-white shadow-sm mb-4">
+            <div class="container-fluid">
+                <span class="navbar-brand mb-0 h1">🏨 Hostel Listing Dashboard</span>
+                <div>
+                    <i class="bi bi-bell fs-5 me-3"></i>
+                    <img src="https://via.placeholder.com/30" class="rounded-circle" alt="user" />
+                </div>
+            </div>
+        </nav>
+
+        <div id="main-content">
+            <!-- Dashboard Section -->
+            <div class="dashboard-section container mt-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>CMS Dashboard</h2>
+                    <div>
+                        <label class="form-label mb-2">Select Hostel:</label>
+                        <select class="form-control d-inline-block w-auto">
+                            <option>Hostel One</option>
+                            <option>Hostel Two</option>
+                            <option>Hostel Three</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Hostel Management Section -->
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Hostel Listings</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Location</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Hostel One</td>
+                                    <td>Kampala</td>
+                                    <td><span class="badge bg-success">Active</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i>
+                                            Edit</button>
+                                        <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i>
+                                            Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Ratings & Stats Section -->
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h6 class="card-title">Average Rating</h6>
+                                <p class="fs-5 mb-0">4.3 <i class="bi bi-star-fill text-warning"></i></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h6 class="card-title">Total Reviews</h6>
+                                <p class="fs-5 mb-0">124</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h6 class="card-title">Total Inquiries</h6>
+                                <p class="fs-5 mb-0">57</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reviews Table -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Recent Reviews</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Rating</th>
+                                    <th>Comment</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Jane Doe</td>
+                                    <td>5 <i class="bi bi-star-fill text-warning"></i></td>
+                                    <td>Great location and clean rooms!</td>
+                                    <td>2025-05-28</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Inquiries Table -->
+                <div class="card mb-5">
+                    <div class="card-header">
+                        <h5>Recent Inquiries</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Contact</th>
+                                    <th>Message</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>John Smith</td>
+                                    <td>+256700000000</td>
+                                    <td>Is there a shared room available?</td>
+                                    <td>2025-05-30</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="navigation-container">
+                    <div class="nav-buttons" style="justify-self: end;">
+                        <button class="btn btn-primary" onclick="navigateWithModal('basic-info-section')"><i
+                                class="bi bi-arrow-right me-1"></i> Next</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 1. Basic Details Section -->
+            <div class="basic-info-section">
+                <div class="form-section">
+                    <h4>1. Basic Details</h4>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Hostel Name</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Type of Hostel</label>
+                            <select class="form-select">
+                                <option selected disabled>--Select Hostel Type --</option>
+                                <option>Boys</option>
+                                <option>Girls</option>
+                                <option>Mixed</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Owner Name</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Contact Number</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Website or Social Link</label>
+                            <input type="url" class="form-control">
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="saveSection('basic-info-section')"><i
+                                class="bi bi-save me-1"></i> Save Changes</button>
+                        <button class="btn btn-secondary" onclick="clearSection('basic-info-section')"><i
+                                class="bi bi-x-circle me-1"></i> Clear</button>
+                    </div>
+                </div>
+
+                <div class="navigation-container">
+                    <div class="nav-buttons">
+                        <button class="btn btn-secondary" onclick="navigateWithModal('dashboard-section')"><i
+                                class="bi bi-arrow-left me-1"></i> Previous</button>
+                        <button class="btn btn-primary" onclick="navigateWithModal('location-section')"><i
+                                class="bi bi-arrow-right me-1"></i> Next</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 2. Location Information -->
+            <div class="location-section">
+                <div class="form-section">
+                    <h4>2. Location Information</h4>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Full Address</label>
+                            <input type="text" class="form-control" placeholder="e.g., 123 Hostel St, Block A">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">City</label>
+                            <input type="text" class="form-control" placeholder="e.g., Nairobi">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Area / Neighborhood</label>
+                            <input type="text" class="form-control" placeholder="e.g., Westlands">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Nearby Landmarks or Institutions</label>
+                            <input type="text" class="form-control"
+                                placeholder="e.g., University of Nairobi, Sarit Centre">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Distance from Main Campus (optional)</label>
+                            <input type="text" class="form-control" placeholder="e.g., 1.2 km">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Directions (optional)</label>
+                            <textarea class="form-control" rows="2"
+                                placeholder="e.g., From XYZ junction, take the second left past ABC Plaza. The hostel is the white gate on the right."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="saveSection('location-section')"><i
+                                class="bi bi-save me-1"></i> Save Changes</button>
+                        <button class="btn btn-secondary" onclick="clearSection('location-section')"><i
+                                class="bi bi-x-circle me-1"></i> Clear</button>
+                    </div>
+                </div>
+
+                <div class="navigation-container">
+                    <div class="nav-buttons">
+                        <button class="btn btn-secondary" onclick="navigateWithModal('basic-info-section')"><i
+                                class="bi bi-arrow-left me-1"></i> Previous</button>
+                        <button class="btn btn-primary" onclick="navigateWithModal('description-section')"><i
+                                class="bi bi-arrow-right me-1"></i> Next</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 3. Hostel Description -->
+            <div class="description-section">
+                <div class="form-section">
+                    <h4>3. Hostel Description</h4>
+                    <div class="mb-3">
+                        <label class="form-label">Overview / Introduction</label>
+                        <textarea class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Hostel Rules</label>
+                        <textarea class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Check-in Time</label>
+                            <input type="time" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Check-out Time</label>
+                            <input type="time" class="form-control">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">Security Features</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="saveSection('description-section')"><i
+                                class="bi bi-save me-1"></i> Save Changes</button>
+                        <button class="btn btn-secondary" onclick="clearSection('description-section')"><i
+                                class="bi bi-x-circle me-1"></i> Clear</button>
+                    </div>
+                </div>
+
+                <div class="navigation-container">
+                    <div class="nav-buttons">
+                        <button class="btn btn-secondary" onclick="navigateWithModal('location-section')"><i
+                                class="bi bi-arrow-left me-1"></i> Previous</button>
+                        <button class="btn btn-primary" onclick="navigateWithModal('rooms-section')"><i
+                                class="bi bi-arrow-right me-1"></i> Next</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 4. Room Information -->
+            <div class="rooms-section">
+                <div class="form-section">
+                    <h4>4. Room Information</h4>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Available Room Types</label>
+                            <select class="form-select" multiple>
+                                <option>Single Room</option>
+                                <option>Shared Room (2 beds)</option>
+                                <option>Shared Room (3 beds)</option>
+                                <option>Shared Room (4 beds)</option>
+                                <option>AC</option>
+                                <option>Non-AC</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Room Pricing</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Room Availability Count</label>
+                            <input type="number" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Furnishing</label>
+                            <textarea class="form-control" rows="2"
+                                placeholder="e.g., bed, mattress, study table, cupboard, fan"></textarea>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="saveSection('rooms-section')"><i
+                                class="bi bi-save me-1"></i> Save Changes</button>
+                        <button class="btn btn-secondary" onclick="clearSection('rooms-section')"><i
+                                class="bi bi-x-circle me-1"></i> Clear</button>
+                    </div>
+                </div>
+
+                <div class="navigation-container">
+                    <div class="nav-buttons">
+                        <button class="btn btn-secondary" onclick="navigateWithModal('description-section')"><i
+                                class="bi bi-arrow-left me-1"></i> Previous</button>
+                        <button class="btn btn-primary" onclick="navigateWithModal('facilities-section')"><i
+                                class="bi bi-arrow-right me-1"></i> Next</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 5. Facilities & Amenities -->
+            <div class="facilities-section">
+                <div class="form-section">
+                    <h4>5. Facilities & Amenities</h4>
+                    <div class="row row-cols-2 row-cols-md-3 g-2">
+                        <div class="form-check col">
+                            <input class="form-check-input" type="checkbox" value="Wi-Fi" id="wifi">
+                            <label class="form-check-label" for="wifi">Wi-Fi</label>
+                        </div>
+                        <div class="form-check col">
+                            <input class="form-check-input" type="checkbox" value="Electricity Backup / Generator"
+                                id="electricity">
+                            <label class="form-check-label" for="electricity">Electricity Backup / Generator</label>
+                        </div>
+                        <div class="form-check col">
+                            <input class="form-check-input" type="checkbox" value="Laundry Services" id="laundry">
+                            <label class="form-check-label" for="laundry">Laundry Services</label>
+                        </div>
+                        <div class="form-check col">
+                            <input class="form-check-input" type="checkbox" value="Meals" id="meals">
+                            <label class="form-check-label" for="meals">Meals (Breakfast/Lunch/Dinner)</label>
+                        </div>
+                        <div class="form-check col">
+                            <input class="form-check-input" type="checkbox" value="Attached Bathroom" id="bathroom">
+                            <label class="form-check-label" for="bathroom">Attached Bathroom</label>
+                        </div>
+                        <div class="form-check col">
+                            <input class="form-check-input" type="checkbox" value="Common Area" id="commonArea">
+                            <label class="form-check-label" for="commonArea">Common Area</label>
+                        </div>
+                        <div class="form-check col">
+                            <input class="form-check-input" type="checkbox" value="Study Room / Library" id="library">
+                            <label class="form-check-label" for="library">Study Room / Library</label>
+                        </div>
+                        <div class="form-check col">
+                            <input class="form-check-input" type="checkbox" value="Gym / Fitness Room" id="gym">
+                            <label class="form-check-label" for="gym">Gym / Fitness Room</label>
+                        </div>
+                        <div class="form-check col">
+                            <input class="form-check-input" type="checkbox" value="Water Purifier" id="purifier">
+                            <label class="form-check-label" for="purifier">Water Purifier</label>
+                        </div>
+                        <div class="form-check col">
+                            <input class="form-check-input" type="checkbox" value="Housekeeping / Cleaning"
+                                id="housekeeping">
+                            <label class="form-check-label" for="housekeeping">Housekeeping / Cleaning</label>
+                        </div>
+                        <div class="form-check col">
+                            <input class="form-check-input" type="checkbox" value="Parking" id="parking">
+                            <label class="form-check-label" for="parking">Parking</label>
+                        </div>
+                        <div class="form-check col">
+                            <input class="form-check-input" type="checkbox" value="Elevator" id="elevator">
+                            <label class="form-check-label" for="elevator">Elevator</label>
+                        </div>
+                        <div class="form-check col">
+                            <input class="form-check-input" type="checkbox" value="Balcony" id="balcony">
+                            <label class="form-check-label" for="balcony">Balcony</label>
+                        </div>
+                        <div class="form-check col">
+                            <input class="form-check-input" type="checkbox" value="TV" id="tv">
+                            <label class="form-check-label" for="tv">TV</label>
+                        </div>
+                        <div class="form-check col">
+                            <input class="form-check-input" type="checkbox" value="Air Conditioning" id="ac">
+                            <label class="form-check-label" for="ac">Air Conditioning</label>
+                        </div>
+                        <div class="form-check col">
+                            <input class="form-check-input" type="checkbox" value="CCTV Surveillance" id="cctv">
+                            <label class="form-check-label" for="cctv">CCTV Surveillance</label>
+                        </div>
+                        <div class="form-check col">
+                            <input class="form-check-input" type="checkbox" value="Biometric Entry" id="biometric">
+                            <label class="form-check-label" for="biometric">Biometric Entry</label>
+                        </div>
+                        <div class="form-check col">
+                            <input class="form-check-input" type="checkbox" value="24/7 Security" id="security">
+                            <label class="form-check-label" for="security">24/7 Security</label>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="saveSection('facilities-section')"><i
+                                class="bi bi-save me-1"></i> Save Changes</button>
+                        <button class="btn btn-secondary" onclick="clearSection('facilities-section')"><i
+                                class="bi bi-x-circle me-1"></i> Clear</button>
+                    </div>
+                </div>
+
+                <div class="navigation-container">
+                    <div class="nav-buttons">
+                        <button class="btn btn-secondary" onclick="navigateWithModal('rooms-section')"><i
+                                class="bi bi-arrow-left me-1"></i> Previous</button>
+                        <button class="btn btn-primary" onclick="navigateWithModal('photos-section')"><i
+                                class="bi bi-arrow-right me-1"></i> Next</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 6. Photos -->
+            <div class="photos-section">
+                <div class="form-section">
+                    <h4>6. Photos</h4>
+                    <div class="photo-grid">
+                        <!-- Front View -->
+                        <div class="photo-upload-section">
+                            <label for="frontView" class="form-label">Front View</label>
+                            <div id="frontViewPreview" class="picture-box picture-box-placeholder"></div>
+                            <input type="file" class="form-control" id="frontView" name="front_view" accept="image/*"
+                                onchange="previewImage(this, 'frontViewPreview', false)">
+                        </div>
+
+                        <!-- Rooms -->
+                        <div class="photo-upload-section">
+                            <label for="rooms" class="form-label">Rooms</label>
+                            <div id="roomsPreview" class="multi-picture-box-container"></div>
+                            <input type="file" class="form-control" id="rooms" name="rooms" accept="image/*" multiple
+                                onchange="previewImage(this, 'roomsPreview', true)">
+                        </div>
+
+                        <!-- Bathrooms -->
+                        <div class="photo-upload-section">
+                            <label for="bathrooms" class="form-label">Bathrooms</label>
+                            <div id="bathroomsPreview" class="multi-picture-box-container"></div>
+                            <input type="file" class="form-control" id="bathrooms" name="bathrooms" accept="image/*"
+                                multiple onchange="previewImage(this, 'bathroomsPreview', true)">
+                        </div>
+
+                        <!-- Common Areas -->
+                        <div class="photo-upload-section">
+                            <label for="common_areas" class="form-label">Common Areas</label>
+                            <div id="commonAreasPreview" class="multi-picture-box-container"></div>
+                            <input type="file" class="form-control" id="commonAreas" name="common_areas"
+                                accept="image/*" multiple onchange="previewImage(this, 'commonAreasPreview', true)">
+                        </div>
+
+                        <!-- Dining Area -->
+                        <div class="photo-upload-section">
+                            <label for="dining_area" class="form-label">Dining Area</label>
+                            <div id="diningAreaPreview" class="multi-picture-box-container"></div>
+                            <input type="file" class="form-control" id="diningArea" name="dining_area" accept="image/*"
+                                multiple onchange="previewImage(this, 'diningAreaPreview', true)">
+                        </div>
+
+                        <!-- Exterior/Interior -->
+                        <div class="photo-upload-section">
+                            <label for="exterior_interior" class="form-label">Building Exterior/Interior</label>
+                            <div id="exteriorInteriorPreview" class="multi-picture-box-container"></div>
+                            <input type="file" class="form-control" id="exteriorInterior" name="exterior_interior"
+                                accept="image/*" multiple
+                                onchange="previewImage(this, 'exteriorInteriorPreview', true)">
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="saveSection('photos-section')"><i
+                                class="bi bi-save me-1"></i> Save Changes</button>
+                        <button class="btn btn-secondary" onclick="clearSection('photos-section')"><i
+                                class="bi bi-x-circle me-1"></i> Clear</button>
+                    </div>
+                </div>
+
+                <div class="navigation-container">
+                    <div class="nav-buttons">
+                        <button class="btn btn-secondary" onclick="navigateWithModal('facilities-section')"><i
+                                class="bi bi-arrow-left me-1"></i> Previous</button>
+                        <button class="btn btn-primary" onclick="navigateWithModal('booking-info-section')"><i
+                                class="bi bi-arrow-right me-1"></i> Next</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. Booking & Payment Info -->
+            <div class="booking-info-section">
+                <div class="form-section">
+                    <h4>7. Booking & Payment Info</h4>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Minimum Booking Duration</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Advance Payment Required</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Refund Policy</label>
+                            <textarea class="form-control" rows="2"></textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Online Payment Option</label>
+                            <select class="form-select">
+                                <option>Yes</option>
+                                <option>No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="saveSection('booking-info-section')"><i
+                                class="bi bi-save me-1"></i> Save Changes</button>
+                        <button class="btn btn-secondary" onclick="clearSection('booking-info-section')"><i
+                                class="bi bi-x-circle me-1"></i> Clear</button>
+                    </div>
+
+                </div>
+
+                <div class="navigation-container">
+                    <div class="nav-buttons">
+                        <button class="btn btn-secondary" onclick="navigateWithModal('photos-section')"><i
+                                class="bi bi-arrow-left me-1"></i> Previous</button>
+                        <button class="btn btn-primary" onclick="navigateWithModal('availability-section')"><i
+                                class="bi bi-arrow-right me-1"></i> Next</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. Availability Status -->
+            <div class="availability-section">
+                <div class="form-section">
+                    <h4>8. Availability Status</h4>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Currently Accepting Bookings?</label>
+                            <select class="form-select">
+                                <option>Yes</option>
+                                <option>No</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Available From</label>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="saveSection('availability-section')"><i
+                                class="bi bi-save me-1"></i> Save Changes</button>
+                        <button class="btn btn-secondary" onclick="clearSection('availability-section')"><i
+                                class="bi bi-x-circle me-1"></i> Clear</button>
+                    </div>
+                </div>
+                <div class="navigation-container">
+                    <div class="nav-buttons">
+                        <button class="btn btn-secondary" onclick="navigateWithModal('booking-info-section')"><i
+                                class="bi bi-arrow-left me-1"></i> Previous</button>
+                        <button class="btn btn-primary" disabled><i class="bi bi-arrow-right me-1"></i>
+                            Next</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="main.js"></script>
+
+</body>
+
+</html>
