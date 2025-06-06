@@ -33,7 +33,7 @@
     </div>
 
     <!-- Mobile Navbar -->
-    <nav class="navbar navbar-dark bg-dark d-md-none">
+    <nav class="navbar navbar-dark d-md-none" style="background-color: #003f5c;">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">🏨 Hostel Admin</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar">
@@ -270,6 +270,14 @@
                                 class="bi bi-save me-1"></i> Save Changes</button>
                         <button class="btn btn-secondary" onclick="clearSection('basic-info-section')"><i
                                 class="bi bi-x-circle me-1"></i> Clear</button>
+                    </div>
+                </div>
+                 <div class="navigation-container">
+                    <div class="nav-buttons">
+                        <button class="btn btn-secondary" onclick="navigateWithModal('dashboard-section')"><i
+                                class="bi bi-arrow-left me-1"></i> Previous</button>
+                        <button class="btn btn-primary" onclick="navigateWithModal('description-section')"><i
+                                class="bi bi-arrow-right me-1"></i> Next</button>
                     </div>
                 </div>
             </div>
@@ -619,6 +627,14 @@
                                 class="bi bi-x-circle me-1"></i> Clear</button>
                     </div>
                 </div>
+                 <div class="navigation-container">
+                    <div class="nav-buttons">
+                        <button class="btn btn-secondary" onclick="navigateWithModal('facilities-section')"><i
+                                class="bi bi-arrow-left me-1"></i> Previous</button>
+                        <button class="btn btn-primary" onclick="navigateWithModal('booking-info-section')"><i
+                                class="bi bi-arrow-right me-1"></i> Next</button>
+                    </div>
+                </div>
             </div>
 
             <!-- 7. Booking & Payment Info -->
@@ -716,7 +732,7 @@
                     <div class="nav-buttons">
                         <button class="btn btn-secondary" onclick="navigateWithModal('booking-info-section')"><i
                                 class="bi bi-arrow-left me-1"></i> Previous</button>
-                        <button class="btn btn-primary" disabled><i class="bi bi-arrow-right me-1"></i> Next</button>
+                        <button class="btn btn-primary" onclick="navigateWithModal('dashboard-section')"><i class="bi bi-arrow-right me-1"></i> Dashboard</button>
                     </div>
                 </div>
             </div>
